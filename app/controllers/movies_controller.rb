@@ -17,6 +17,11 @@ class MoviesController < ApplicationController
       flash.keep
       redirect_to movies_path(:order => session[:order], :ratings => session[:ratings]) and return 
     end 
+    
+    @title_hilite = session[:title_hilite] = "hilite" if params[:order] == 'title'
+    @date_hilite = session[:date_hilite] = "hilite" if params[:order] == 'release_date'
+    
+    
     @ratings = params[:ratings]
     #Get list of ratings from the model
     ratings_list = Movie.list_of_ratings
