@@ -12,6 +12,7 @@ class MoviesController < ApplicationController
 
   def index
     @ratings = params[:ratings]
+    #Get list of ratings from the model
     ratings_list = Movie.list_of_ratings
   
     if !@ratings.nil?
