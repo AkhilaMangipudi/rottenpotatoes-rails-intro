@@ -15,7 +15,7 @@ class MoviesController < ApplicationController
     # if we are opening from an already opened window, we should have some constraints which we set earlier, and we use session hash to restore the value
     if(params[:order].nil? && params[:ratings].nil? && (!session[:order].nil? || !session[:ratings].nil?))
       flash.keep
-      redirect_to movies_path(:order_by => session[:order], :ratings => session[:ratings]) and return 
+      redirect_to movies_path(:order => session[:order], :ratings => session[:ratings]) and return 
     end 
     @ratings = params[:ratings]
     #Get list of ratings from the model
