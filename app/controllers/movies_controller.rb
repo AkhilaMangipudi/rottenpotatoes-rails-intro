@@ -11,11 +11,26 @@ class MoviesController < ApplicationController
   end
 
   def index
+    @ratings = params[:ratings]
+    ratings_list = Movie.list_of_ratings
+    
+    if !@ratings.nil?
+      ratings_chosen = @ratings.keys
+    else 
+      ratings_chosen = ratings_list.to_enum  
+    end
+    
+    @ratings_all = Hash.new
+    
+    ratings_list.each do |rating|
+      @ratings_all[rating] = @ratings.nil? ? true : @ratings.has_key?(rating)
+    end
+    
     @order_by = params[:order]
     if !@order_by.nil?
-      @movies = Movie.order("#{@order_by}").all
+      @movies = Movie.where('rating in (?)', ratings_chosen).order("#{@order_by}").all
     else
-      @movies = Movie.all
+      @movies = Movie.where('rating in (?)', ratings_chosen)
     end 
   end
 
