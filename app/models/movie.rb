@@ -1,10 +1,11 @@
 class Movie < ActiveRecord::Base
     def self.list_of_ratings
-        @@ratings_list = self.select(:rating).distinct
-        list_ratings = []
-        @@ratings_list.each do |rating|
-            list_ratings.push(rating.rating)
-        end
-        return list_ratings
+    ratings_all = []
+    Movie.all.each do |movie|
+      if (ratings_all.find_index(movie.rating) == nil)
+        ratings_all.push(movie.rating)
+      end
+    end
+    return ratings_all
     end
 end

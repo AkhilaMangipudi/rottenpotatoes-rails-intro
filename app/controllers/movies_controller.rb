@@ -15,6 +15,7 @@ class MoviesController < ApplicationController
     #Get list of ratings from the model
     ratings_list = Movie.list_of_ratings
   
+    #The unchecked box movies should not be considered; i.e. when @ratings is not NIL, then we have a specific set of movies to consider, in the other case consider all the movies
     if !@ratings.nil?
       ratings_chosen = @ratings.keys
     else 
@@ -27,6 +28,7 @@ class MoviesController < ApplicationController
       @ratings_all[rating] = @ratings.nil? ? true : @ratings.has_key?(rating)
     end
     
+    #Ordering should still be preserved even after adding the checkboxes for ratings.
     @order_by = params[:order]
     if !@order_by.nil?
       @movies = Movie.where('rating in (?)', ratings_chosen).order("#{@order_by}").all
